@@ -15,27 +15,64 @@ function playRound(playerSelection, computerSelection) {
     if (playerSelection === computerSelection) {
         return "It's a draw!";
     } else if (playerSelection === "rock" && computerSelection === "paper") {
-        return "You Lose! Paper beats Rock";
+        computerWinRound();
+        return `You Lose! Paper beats Rock. The score is ${playerScore} to ${computerScore}`;
     } else if (playerSelection === "paper" && computerSelection === "scissors") {
-        return "You Lose! Scissors beats Paper";
+        computerWinRound();
+        return `You Lose! Scissors beats Paper. The score is ${playerScore} to ${computerScore}`;
     } else if (playerSelection === "scissors" && computerSelection === "rock") {
-        return "You Lose! Rock beats Scissors"
+        computerWinRound();
+        return `You Lose! Rock beats Scissors. The score is ${playerScore} to ${computerScore}`
     } else {
-        return `You Win! ${playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)} beats ${computerSelection.charAt(0).toUpperCase() + computerSelection.slice(1)}`;
+        playerWinRound();
+        return `You Win! ${playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)} beats ${computerSelection.charAt(0).toUpperCase() + computerSelection.slice(1)}. The score is ${playerScore} to ${computerScore}`;
     }
 }
 
-let playerInput = window.prompt(`Enter "Rock", "Paper" or "Scissors": `);
-let playerSelection = playerInput.toLowerCase();
-// user input validation
-while (true) {
-    if (playerSelection === "rock" || playerSelection === "paper" || playerSelection === "scissors") {
-        break;
-    } else {
-        playerInput = window.prompt(`Invalid input. Enter "Rock", "Paper" or "Scissors": `);
-        playerSelection = playerInput.toLowerCase();
+//Use the previous function inside of this one to play a 5 round game that keeps score and reports a winner or loser at the end
+function game() {
+    let playerSelection, computerSelection;
+    // loops until one player hits 3 points
+    while (playerScore < 3 && computerScore < 3) {
+        playerSelection = playerPlay();
+        computerSelection = computerPlay();
+        console.log(playRound(playerSelection, computerSelection));
     }
+    if (playerScore > computerScore) {
+        console.log("Player wins!");
+    } else {
+        console.log("Computer wins!");
+    }
+
 }
 
-const computerSelection = computerPlay();
-console.log(playRound(playerSelection, computerSelection));
+// function to get player input
+function playerPlay() {
+    let playerInput = window.prompt(`Enter "Rock", "Paper" or "Scissors": `);
+    let playerSelection = playerInput.toLowerCase();
+    // user input validation
+    while (true) {
+        if (playerSelection === "rock" || playerSelection === "paper" || playerSelection === "scissors") {
+            break;
+        } else {
+            playerInput = window.prompt(`Invalid input. Enter "Rock", "Paper" or "Scissors": `);
+            playerSelection = playerInput.toLowerCase();
+        }
+    }
+    return playerSelection;
+}
+
+// increment player score
+function playerWinRound() {
+    playerScore++;
+}
+
+// increment computer score
+function computerWinRound() {
+    computerScore++;
+}
+
+// init player scores
+let computerScore = 0;
+let playerScore = 0;
+game();
