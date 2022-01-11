@@ -12,3 +12,7 @@ This project is to demonstrate Javascript knowledge learnt up to this point in T
 - Usage of function to compare choice of player and computer and produce a result
 - Usage of input validation to ensure user only enters valid input
 - Usage of loop to handle game
+- Add event listener to buttons
+- Change content of `div` using DOM methods
+- Refactor codes
+- Merge branch using git
